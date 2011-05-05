@@ -39,6 +39,13 @@ public class Asignatura {
 	public int getCreditos() {
 		return creditos;
 	}
+	
+	public Asignatura(String codigo, String nombre, int creditos) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.creditos = creditos;
+	}
+	
 	/**
 	 * @param creditos the creditos to set
 	 */
@@ -47,6 +54,10 @@ public class Asignatura {
 		if ((creditos>9) || (creditos<3)) throw new Exception("El número" +
 				" de créditos introducido no es válido.");
 		this.creditos = creditos;
+	}
+	
+	public void printAsignatura() {
+		System.out.println(getCodigo() + " - " + getNombre() + ", " + getCreditos());
 	}
 
 }

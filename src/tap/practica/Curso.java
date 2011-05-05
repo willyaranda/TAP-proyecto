@@ -23,4 +23,17 @@ public class Curso {
 		this.curso = curso;
 	}
 	
+	public void printCurso() {
+		System.out.println("Curso " + curso);
+		System.out.println("Semestre 1");
+		for (Asignatura asig : semestre1) {
+			asig.printAsignatura();
+		}
+		System.out.println("Semestre 2");
+		for (Asignatura asig : semestre2) {
+			asig.printAsignatura();
+		}
+		System.out.println();
+	}
+	
 }
