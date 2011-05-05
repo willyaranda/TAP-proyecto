@@ -8,9 +8,15 @@ public class Matricula {
 	
 	int numCreditos;
 	
-	public void matricularAsignatura(Asignatura asig) {
+	public Boolean matricularAsignatura(Asignatura asig) {
+		if ((numCreditos + asig.getCreditos()) > 60) return false;
 		matriculadas.add(asig);
 		numCreditos += asig.getCreditos();
+		return true;
+	}
+	
+	public Boolean comprobar() {
+		return ((numCreditos > 60) || (numCreditos < 12)) ? false : true;
 	}
 
 }
