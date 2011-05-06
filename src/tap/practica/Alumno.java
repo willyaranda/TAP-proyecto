@@ -15,12 +15,10 @@ public class Alumno {
 	
 	Matricula matricula = new Matricula();
 	
-	public Alumno(int nif, String nombre, String apellidos, Estudio estudio,
-			int curso) {
+	public Alumno(int nif, String nombre, String apellidos, int curso) {
 		this.nif = nif;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
-		this.estudioCarrera = estudio;
 		this.curso = curso;
 	}
 	
@@ -28,6 +26,14 @@ public class Alumno {
 		System.out.print(nif + " - " + nombre + " " + apellidos + " " +
 				estudioCarrera.nombre + " - " + curso);
 		estudioCarrera.printCursos();
+	}
+
+	public Estudio getEstudioCarrera() {
+		return estudioCarrera;
+	}
+
+	public void setEstudioCarrera(Estudio estudioCarrera) {
+		this.estudioCarrera = estudioCarrera;
 	}
 
 }

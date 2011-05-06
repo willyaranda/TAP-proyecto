@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="Curso1-Asig1" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C1-A1" />
+		<constructor-arg value="C1-A1" />
+		<constructor-arg value="5" />
+	</bean>
+	
+	<bean id="Curso1-Asig2" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C1-A2" />
+		<constructor-arg value="C1-A2" />
+		<constructor-arg value="4" />
+	</bean>
+	
+	<bean id="Curso1-Asig3" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C1-A3" />
+		<constructor-arg value="C1-A3" />
+		<constructor-arg value="6" />
+	</bean>
+	
+	<bean id="Curso1-Asig4" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C1-A4" />
+		<constructor-arg value="C1-A4" />
+		<constructor-arg value="6" />
+	</bean>
+	
+	<bean id="Curso2-Asig1" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C2-A1" />
+		<constructor-arg value="C2-A1" />
+		<constructor-arg value="3" />
+	</bean>
+	
+	<bean id="Curso2-Asig2" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C2-A2" />
+		<constructor-arg value="C2-A2" />
+		<constructor-arg value="8" />
+	</bean>
+	
+	<bean id="Curso2-Asig3" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C2-A3" />
+		<constructor-arg value="C2-A3" />
+		<constructor-arg value="7" />
+	</bean>
+	
+	<bean id="Curso2-Asig4" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C2-A4" />
+		<constructor-arg value="C2-A4" />
+		<constructor-arg value="7" />
+	</bean>
+	
+	<bean id="Curso3-Asig1" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C3-A1" />
+		<constructor-arg value="C3-A1" />
+		<constructor-arg value="5" />
+	</bean>
+	
+	<bean id="Curso3-Asig2" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C3-A2" />
+		<constructor-arg value="C3-A2" />
+		<constructor-arg value="7" />
+	</bean>
+	
+	<bean id="Curso3-Asig3" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C3-A3" />
+		<constructor-arg value="C3-A3" />
+		<constructor-arg value="9" />
+	</bean>
+	
+	<bean id="Curso3-Asig4" class="tap.practica.Asignatura">
+		<constructor-arg value="COD-C3-A4" />
+		<constructor-arg value="C3-A4" />
+		<constructor-arg value="7" />
+	</bean>
+	
+	<bean id="Curso1" class="tap.practica.Curso">
+		<constructor-arg value="1" />
+		<property name="semestre1">
+			<list>
+				<ref bean ="Curso1-Asig1" />
+				<ref bean ="Curso1-Asig2" />
+			</list>
+		</property>
+		<property name="semestre2">
+			<list>
+				<ref bean ="Curso1-Asig3" />
+				<ref bean ="Curso1-Asig4" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Curso2" class="tap.practica.Curso">
+		<constructor-arg value="2" />
+		<property name="semestre1">
+			<list>
+				<ref bean ="Curso2-Asig1" />
+				<ref bean ="Curso2-Asig2" />
+			</list>
+		</property>
+		<property name="semestre2">
+			<list>
+				<ref bean ="Curso2-Asig3" />
+				<ref bean ="Curso2-Asig4" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Curso3" class="tap.practica.Curso">
+		<constructor-arg value="3" />
+		<property name="semestre1">
+			<list>
+				<ref bean ="Curso3-Asig1" />
+				<ref bean ="Curso3-Asig2" />
+			</list>
+		</property>
+		<property name="semestre2">
+			<list>
+				<ref bean ="Curso3-Asig3" />
+				<ref bean ="Curso3-Asig4" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Estudio1" class="tap.practica.Estudio">
+		<constructor-arg value="IngInformatica" />
+		<property name="cursos">
+			<list>
+				<ref bean ="Curso1" />
+				<ref bean ="Curso2" />
+				<ref bean ="Curso3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="Alumno1" class="tap.practica.Alumno">
+		<constructor-arg value="1234"/>
+		<constructor-arg value="Guillermo"/>
+		<constructor-arg value="Lopez Penis"/>
+		<constructor-arg value="2"/>
+		<property name="estudioCarrera">
+			<ref bean ="Estudio1" />
+		</property>
+	</bean>
+</beans>

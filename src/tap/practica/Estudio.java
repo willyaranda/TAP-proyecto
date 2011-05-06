@@ -8,8 +8,20 @@ public class Estudio {
 	
 	ArrayList<Curso> cursos = new ArrayList<Curso>();
 	
-	public void anadirCurso(Curso curso) {
-		cursos.add(curso);
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public ArrayList<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(ArrayList<Curso> cursos) {
+		this.cursos = cursos;
 	}
 	
 	public Estudio(String nombre) {

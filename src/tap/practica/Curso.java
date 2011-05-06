@@ -7,6 +7,22 @@ public class Curso {
 	int curso;
 	
 	ArrayList<Asignatura> semestre1 = new ArrayList<Asignatura>();
+	public ArrayList<Asignatura> getSemestre1() {
+		return semestre1;
+	}
+
+	public void setSemestre1(ArrayList<Asignatura> semestre1) {
+		this.semestre1 = semestre1;
+	}
+
+	public ArrayList<Asignatura> getSemestre2() {
+		return semestre2;
+	}
+
+	public void setSemestre2(ArrayList<Asignatura> semestre2) {
+		this.semestre2 = semestre2;
+	}
+
 	ArrayList<Asignatura> semestre2 = new ArrayList<Asignatura>();
 
 	void anadirAsignatura(int semestre, Asignatura asig) throws Exception {
