@@ -1,5 +1,8 @@
 package tap.practica.estructuras;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,28 +22,23 @@ public class Matricula implements GuardarIfaz {
 	 * Comprueba si se puede añadir a la lista de matriculación. No nos 
 	 * podemos pasar de 60 créditos matriculados, y en ese caso devuelve <b>false</b>
 	 * En cualquier otro caso, devuelve <b>true</b>
-	 * @param asig la Asignatura
+	 * @param nombre el nombre de la asignatura
 	 * @return si la operación ha sido completada correctamente
 	 */
 	public Boolean matricular(String nombre) {
-//		int curso = tap.practica.Inicio.getAlumno().getCurso();
-//		ArrayList<Asignatura> sem1 = tap.practica.Inicio.getAlumno().
-//			getEstudioCarrera().getCursos().get(curso).getSemestre1();
-//		ArrayList<Asignatura> sem2 = tap.practica.Inicio.getAlumno().
-//			getEstudioCarrera().getCursos().get(curso).getSemestre2();
-//		for (int j = 0 ; j < sem1.size(); i++) {
-//			if (sem1.get(j).getNombre().equals(nombre)) {
-//				matriculadas.add(e);
-//		}
-//		for (int j = 0 ; j < sem2.size(); i++) {
-//				if (matriculadas.get(i).getCodigo().equals(sem2.get(j).getCodigo()));
-//				else modelo.addElement(matriculadas.get(i).getNombre());
-//			}
-//		} 
-//		if ((numCreditos + asig.getCreditos()) > 60) return false;
-//		matriculadas.add(asig);
-//		numCreditos += asig.getCreditos();
+		Asignatura a = tap.practica.Inicio.getAlumno().getEstudioCarrera().
+						buscarAsig(nombre);
+		if ((numCreditos + a.getCreditos()) > 60) return false;
+		numCreditos += a.getCreditos();
+		matriculadas.add(a);
 		return true;
+	}
+	
+	public void desmatricular(String nombre) {
+		Asignatura a = tap.practica.Inicio.getAlumno().getEstudioCarrera().
+			buscarAsig(nombre);
+		numCreditos -= a.getCreditos();
+		matriculadas.remove(a);
 	}
 	
 	/**
@@ -83,7 +81,31 @@ public class Matricula implements GuardarIfaz {
 	
 	@Override
 	public void guardar(String nif) {
-		System.out.println("Guardando...");	
+		System.out.println("Guardando...");
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream("./"+nif+".txt");
+			Alumno a = tap.practica.Inicio.getAlumno();
+			String write = a.getNif() + " - " + a.getNombre() + " " + a.getApellidos() +
+				 ". Estudiando: " + a.getEstudioCarrera().getNombre() + 
+				 " en " + (a.getCurso()-1) +"º. Asignaturas: \n";					
+			for (Asignatura as : matriculadas) {
+				write += (as.getCodigo() + ": " + as.getNombre() + ", " +
+						  as.getCreditos() + "\n");
+			}
+			fos.write(write.getBytes());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			try {
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
-
 }

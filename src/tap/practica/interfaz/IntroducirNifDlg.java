@@ -18,7 +18,7 @@ public class IntroducirNifDlg extends JDialog implements ActionListener {
 	
 	JPanel panelPrincipal = new JPanel();
 
-	final String TXT_PLACEHOLDER = "Introduce NIF";
+	final String TXT_PLACEHOLDER = "q1234";
 	final String BTN_BUSCAR = "Buscar";
 	final String TITLE = "Introducir NIF - Matriculación";
 	
@@ -57,13 +57,13 @@ public class IntroducirNifDlg extends JDialog implements ActionListener {
 			 * o guardarlo en una variable global
 			 * 
 			 */
+			System.out.println("estoy aquí");
 			if (tap.practica.Inicio.cargarAlumno(placeholderNIFTxt.getText())) {
+				//TODO: Decir al Frame que ha cambiado.
 				this.setVisible(false);
 			} else {
 				System.out.println(placeholderNIFTxt.getText());
 			}
 		}
 	}
-	
-	
 }

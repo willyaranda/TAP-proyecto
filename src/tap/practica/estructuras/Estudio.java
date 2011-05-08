@@ -68,4 +68,18 @@ public class Estudio {
 		}
 	}
 	
+	public Asignatura buscarAsig(String nom) {
+		for (Curso c : cursos) {
+			ArrayList<Asignatura> sem1 = c.getSemestre1();
+			ArrayList<Asignatura> sem2 = c.getSemestre2();
+			for (Asignatura a : sem1) {
+				if (a.getNombre().equals(nom)) return a;
+			}
+			for (Asignatura a : sem2) {
+				if (a.getNombre().equals(nom)) return a;
+			}
+		}
+		return null;
+	}
+	
 }

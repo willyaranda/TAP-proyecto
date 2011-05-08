@@ -113,7 +113,7 @@ public class MatricularMarco extends JFrame implements ActionListener {
 	
 	private DefaultListModel cargarListaDisponibles() {
 		DefaultListModel modelo = new DefaultListModel();
-		int curso = tap.practica.Inicio.getAlumno().getCurso();
+		int curso = tap.practica.Inicio.getAlumno().getCurso()-1;
 		System.out.println("\t\tEstudiando" + curso);
 		ArrayList<Asignatura> matriculadas = tap.practica.Inicio.getAlumno().getMatricula().getMatriculadas();
 		ArrayList<Asignatura> sem1 = tap.practica.Inicio.getAlumno().
@@ -132,13 +132,14 @@ public class MatricularMarco extends JFrame implements ActionListener {
 				if (sem2.get(i).getCodigo().equals(matriculadas.get(j).getCodigo())) continue;
 				else modelo.addElement(sem2.get(i).getNombre());
 			}
+			modelo.addElement(sem2.get(i).getNombre());
 		}
 		return modelo;
 	}
 	
 	private DefaultListModel cargarListaMatriculadas() {
 		DefaultListModel modelo = new DefaultListModel();
-		int curso = tap.practica.Inicio.getAlumno().getCurso();
+		int curso = tap.practica.Inicio.getAlumno().getCurso()-1;
 		ArrayList<Asignatura> matr = tap.practica.Inicio.getAlumno().getMatricula().getMatriculadas();
 		ArrayList<Asignatura> sem1 = tap.practica.Inicio.getAlumno().
 				getEstudioCarrera().getCursos().get(curso).getSemestre1();
@@ -179,6 +180,7 @@ public class MatricularMarco extends JFrame implements ActionListener {
 				DefaultListModel listaDrcha = (DefaultListModel) matriculadasList.getModel();  
 				String seleccion = (String) listaDrcha.getElementAt(index);
 				DefaultListModel listaIzda = (DefaultListModel) disponiblesList.getModel();
+				tap.practica.Inicio.getAlumno().getMatricula().desmatricular(seleccion);
 				listaIzda.addElement(seleccion);
 				listaDrcha.removeElementAt( index );
 			}
@@ -191,9 +193,13 @@ public class MatricularMarco extends JFrame implements ActionListener {
 				  DefaultListModel listaIzda = (DefaultListModel) disponiblesList.getModel();  
 				  String seleccion = (String) listaIzda.getElementAt(index);
 				  DefaultListModel listaDrcha = (DefaultListModel) matriculadasList.getModel();
-				  if (tap.practica.Inicio.getAlumno().getMatricula().matricular(seleccion));
-				  listaDrcha.addElement(seleccion);
-				  listaIzda.removeElementAt( index );
+				  if (tap.practica.Inicio.getAlumno().getMatricula().matricular(seleccion)) {
+					  listaDrcha.addElement(seleccion);
+					  listaIzda.removeElementAt( index );
+				  }
+				  else {
+					System.out.println("Te pasaste de 60 créditos");
+				}
 			}
 		}
 		
@@ -204,5 +210,37 @@ public class MatricularMarco extends JFrame implements ActionListener {
 			}
 			else System.out.println("Matrícula no válida");
 		}
+	}
+	public void actualizar() {
+		disponiblesList.setModel(cargarListaDisponibles());
+		matriculadasList.setModel(cargarListaMatriculadas());
+	}
+
+	/**
+	 * @return the disponiblesList
+	 */
+	public JList getDisponiblesList() {
+		return disponiblesList;
+	}
+
+	/**
+	 * @param disponiblesList the disponiblesList to set
+	 */
+	public void setDisponiblesList(JList disponiblesList) {
+		this.disponiblesList = disponiblesList;
+	}
+
+	/**
+	 * @return the matriculadasList
+	 */
+	public JList getMatriculadasList() {
+		return matriculadasList;
+	}
+
+	/**
+	 * @param matriculadasList the matriculadasList to set
+	 */
+	public void setMatriculadasList(JList matriculadasList) {
+		this.matriculadasList = matriculadasList;
 	}
 }

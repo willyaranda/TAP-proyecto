@@ -5,7 +5,7 @@
 	<bean id="Curso1-Asig1" class="tap.practica.estructuras.Asignatura">
 		<constructor-arg value="COD-C1-A1" />
 		<constructor-arg value="C1-A1" />
-		<constructor-arg value="5" />
+		<constructor-arg value="10" />
 	</bean>
 	
 	<bean id="Curso1-Asig2" class="tap.practica.estructuras.Asignatura">
@@ -138,6 +138,16 @@
 		<constructor-arg value="Guillermo"/>
 		<constructor-arg value="Lopez Penis"/>
 		<constructor-arg value="2"/>
+		<property name="estudioCarrera">
+			<ref bean ="Estudio1" />
+		</property>
+	</bean>
+	
+		<bean id="q12345" class="tap.practica.estructuras.Alumno">
+		<constructor-arg value="q12345"/>
+		<constructor-arg value="Aldo"/>
+		<constructor-arg value="Penisland"/>
+		<constructor-arg value="3"/>
 		<property name="estudioCarrera">
 			<ref bean ="Estudio1" />
 		</property>
