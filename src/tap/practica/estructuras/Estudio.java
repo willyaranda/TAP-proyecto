@@ -1,4 +1,4 @@
-package tap.practica;
+package tap.practica.estructuras;
 
 import java.util.ArrayList;
 

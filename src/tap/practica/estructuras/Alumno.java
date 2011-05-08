@@ -1,4 +1,4 @@
-package tap.practica;
+package tap.practica.estructuras;
 
 /**
  * Clase Alumno, que contiene los datos del alumno (ver constructor),
@@ -12,7 +12,7 @@ package tap.practica;
 
 public class Alumno {
 	
-	int nif;
+	String nif = new String();
 	String nombre = new String();
 	String apellidos = new String();
 	
@@ -39,13 +39,16 @@ public class Alumno {
 	 * @param apellidos	una cadena con los apellidos del alumno
 	 * @param curso		un entero con el curso actual que está cursando
 	 */
-	public Alumno(int nif, String nombre, String apellidos, int curso) {
+	public Alumno(String nif, String nombre, String apellidos, int curso) {
 		this.nif = nif;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.curso = curso;
 	}
 	
+	public Alumno() {
+	}
+
 	/**
 	 * Imprime los datos propios del Alumno y además todas las asignaturas
 	 * de la carrera.
@@ -72,4 +75,73 @@ public class Alumno {
 		this.estudioCarrera = estudioCarrera;
 	}
 
+	/**
+	 * @return the nif
+	 */
+	public String getNif() {
+		return nif;
+	}
+
+	/**
+	 * @param nif the nif to set
+	 */
+	public void setNif(String nif) {
+		this.nif = nif;
+	}
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return the apellidos
+	 */
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	/**
+	 * @param apellidos the apellidos to set
+	 */
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	/**
+	 * @return the curso
+	 */
+	public int getCurso() {
+		return curso;
+	}
+
+	/**
+	 * @param curso the curso to set
+	 */
+	public void setCurso(int curso) {
+		this.curso = curso;
+	}
+
+	/**
+	 * @return the matricula
+	 */
+	public Matricula getMatricula() {
+		return matricula;
+	}
+
+	/**
+	 * @param matricula the matricula to set
+	 */
+	public void setMatricula(Matricula matricula) {
+		this.matricula = matricula;
+	}
 }

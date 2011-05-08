@@ -48,7 +48,7 @@ public class IntroducirNifDlg extends JDialog implements ActionListener {
 		panelPrincipal.add(placeholderNIFTxt);
 		panelPrincipal.add(continuarBtn);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("pulsadoContinuar".equals(e.getActionCommand())) {
@@ -57,9 +57,13 @@ public class IntroducirNifDlg extends JDialog implements ActionListener {
 			 * o guardarlo en una variable global
 			 * 
 			 */
-			System.out.println(placeholderNIFTxt.getText());
-			this.setVisible(false);
+			if (tap.practica.Inicio.cargarAlumno(placeholderNIFTxt.getText())) {
+				this.setVisible(false);
+			} else {
+				System.out.println(placeholderNIFTxt.getText());
+			}
 		}
-		
 	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package tap.practica;
+package tap.practica.estructuras;
 
 /**
  * Clase Asignatura, contiene atributos como una cadena con el código de la
