@@ -88,7 +88,7 @@ public class Matricula implements GuardarIfaz {
 			Alumno a = tap.practica.Inicio.getAlumno();
 			String write = a.getNif() + " - " + a.getNombre() + " " + a.getApellidos() +
 				 ". Estudiando: " + a.getEstudioCarrera().getNombre() + 
-				 " en " + (a.getCurso()-1) +"º. Asignaturas: \n";					
+				 " en " + a.getCurso() +"º. Asignaturas: \n";					
 			for (Asignatura as : matriculadas) {
 				write += (as.getCodigo() + ": " + as.getNombre() + ", " +
 						  as.getCreditos() + "\n");

@@ -25,7 +25,7 @@ public class Inicio {
 			alumno.print();
 			
 		    //// Creamos JFrame con estilo y operación de cierre
-		    MatricularMarco frame = new MatricularMarco();
+			MatricularMarco frame = new MatricularMarco();
 		    javax.swing.JFrame.setDefaultLookAndFeelDecorated(true);
 		    frame.setDefaultCloseOperation( javax.swing.JFrame.HIDE_ON_CLOSE);
 

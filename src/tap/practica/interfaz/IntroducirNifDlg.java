@@ -52,14 +52,7 @@ public class IntroducirNifDlg extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("pulsadoContinuar".equals(e.getActionCommand())) {
-			/*
-			 * Hay que devolver el valor del placeholderNIFTxt
-			 * o guardarlo en una variable global
-			 * 
-			 */
-			System.out.println("estoy aquí");
 			if (tap.practica.Inicio.cargarAlumno(placeholderNIFTxt.getText())) {
-				//TODO: Decir al Frame que ha cambiado.
 				this.setVisible(false);
 			} else {
 				System.out.println(placeholderNIFTxt.getText());
