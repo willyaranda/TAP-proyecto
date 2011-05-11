@@ -136,7 +136,7 @@
 	<bean id="q1234" class="tap.practica.estructuras.Alumno">
 		<constructor-arg value="q1234"/>
 		<constructor-arg value="Guillermo"/>
-		<constructor-arg value="Lopez Penis"/>
+		<constructor-arg value="Lopez"/>
 		<constructor-arg value="1"/>
 		<property name="estudioCarrera">
 			<ref bean ="Estudio1" />
@@ -146,7 +146,7 @@
 		<bean id="q12345" class="tap.practica.estructuras.Alumno">
 		<constructor-arg value="q12345"/>
 		<constructor-arg value="Aldo"/>
-		<constructor-arg value="Penisland"/>
+		<constructor-arg value="Pedromingo"/>
 		<constructor-arg value="3"/>
 		<property name="estudioCarrera">
 			<ref bean ="Estudio1" />

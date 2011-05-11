@@ -17,29 +17,29 @@ import javax.swing.JPanel;
 import tap.practica.estructuras.Asignatura;
 
 public class MatricularMarco extends JFrame implements ActionListener {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	JMenuBar menuPrincipal = new JMenuBar();  // MenuBar
+	JMenuBar menuPrincipal = new JMenuBar(); // MenuBar
 
-	//// Menú Archivo
+	// // Menú Archivo
 	JMenu menuArchivo = new JMenu();
 	JMenuItem menuItemSalir = new JMenuItem();
 	JMenuItem menuItemBuscar = new JMenuItem();
 
-	//// Manú Ayuda
+	// // Manú Ayuda
 	JMenu menuAyuda = new JMenu();
 	JMenuItem menuItemAcercaDe = new JMenuItem();
 
 	JPanel panelPrincipal = new JPanel();
-	
+
 	JList disponiblesList = new JList();
 	JList matriculadasList = new JList();
 	JButton pasarIzdaBtn = new JButton();
 	JButton pasarDrchaBtn = new JButton();
 	JButton grabarBtn = new JButton();
 
-	//// Cadenas de opciones de menú
+	// // Cadenas de opciones de menú
 	final String ITEM_ARCHIVO = "Archivo";
 	final String ITEM_SALIR = "Salir";
 	final String ITEM_AYUDA = "Ayuda";
@@ -47,9 +47,9 @@ public class MatricularMarco extends JFrame implements ActionListener {
 	final String TITLE = "Matricular";
 	final String TITLE_DLG = "Introducir NIF";
 	final String SAVE = "Grabar";
-	
+
 	IntroducirNifDlg dial = new IntroducirNifDlg(this, TITLE_DLG, true);
-	
+
 	public MatricularMarco() {
 		try {
 			jbInit();
@@ -58,19 +58,93 @@ public class MatricularMarco extends JFrame implements ActionListener {
 		}
 	}
 
-	private void jbInit() throws Exception  {
-		showDialog();
-		panelPrincipal = (JPanel) this.getContentPane();
-		panelPrincipal.setLayout( new BorderLayout( ) );
-		this.setTitle(TITLE + " - " + tap.practica.Inicio.getAlumno().getNif());
-      	definirMenu();
-      	definirElementos();
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().compareTo(ITEM_ACERCADE) == 0)
+			System.out.println("Acerca de");
+
+		if (e.getActionCommand().compareTo(ITEM_SALIR) == 0) {
+			System.out.println("Salimos");
+			System.exit(0);
+			return;
+		}
+
+		if ("pulsadoIzda".equals(e.getActionCommand())) {
+			int index = matriculadasList.getSelectedIndex();
+			if (index != -1) {
+				System.out
+						.println("Añadiendo a disponibles, quitando de matriculadas");
+				DefaultListModel listaDrcha = (DefaultListModel) matriculadasList
+						.getModel();
+				String seleccion = (String) listaDrcha.getElementAt(index);
+				DefaultListModel listaIzda = (DefaultListModel) disponiblesList
+						.getModel();
+				tap.practica.cliente.Inicio.getAlumno().getMatricula()
+						.desmatricular(seleccion);
+				listaIzda.addElement(seleccion);
+				listaDrcha.removeElementAt(index);
+			}
+		}
+
+		if ("pulsadoDrcha".equals(e.getActionCommand())) {
+			int index = disponiblesList.getSelectedIndex();
+			if (index != -1) {
+				System.out
+						.println("Añadiendo a matriculadas, quitando de disponibles");
+				DefaultListModel listaIzda = (DefaultListModel) disponiblesList
+						.getModel();
+				String seleccion = (String) listaIzda.getElementAt(index);
+				DefaultListModel listaDrcha = (DefaultListModel) matriculadasList
+						.getModel();
+				if (tap.practica.cliente.Inicio.getAlumno().getMatricula()
+						.matricular(seleccion)) {
+					listaDrcha.addElement(seleccion);
+					listaIzda.removeElementAt(index);
+				} else {
+					System.out.println("Te pasaste de 60 créditos");
+				}
+			}
+		}
+
+		if (SAVE.equals(e.getActionCommand())) {
+			if (tap.practica.cliente.Inicio.getAlumno().getMatricula()
+					.comprobar()) {
+				tap.practica.cliente.Inicio.getAlumno().getMatricula().guardar(
+						tap.practica.cliente.Inicio.getAlumno().getNif());
+			} else
+				System.out.println("Matrícula no válida");
+		}
 	}
-	
-	private void showDialog() {
-		dial.setVisible(true);
+
+	private DefaultListModel cargarListaDisponibles() {
+		DefaultListModel modelo = new DefaultListModel();
+		int curso = tap.practica.cliente.Inicio.getAlumno().getCurso() - 1;
+		System.out.println("\t\tEstudiando" + curso + 1);
+		// ArrayList<Asignatura> matriculadas =
+		// tap.practica.Inicio.getAlumno().getMatricula().getMatriculadas();
+		ArrayList<Asignatura> sem1 = tap.practica.cliente.Inicio.getAlumno()
+				.getEstudioCarrera().getCursos().get(curso).getSemestre1();
+		ArrayList<Asignatura> sem2 = tap.practica.cliente.Inicio.getAlumno()
+				.getEstudioCarrera().getCursos().get(curso).getSemestre2();
+		for (int i = 0; i < sem1.size(); i++) {
+			modelo.addElement(sem1.get(i).getNombre());
+		}
+		for (int i = 0; i < sem2.size(); i++) {
+			modelo.addElement(sem2.get(i).getNombre());
+		}
+		return modelo;
 	}
-	
+
+	private DefaultListModel cargarListaMatriculadas() {
+		DefaultListModel modelo = new DefaultListModel();
+		ArrayList<Asignatura> matr = tap.practica.cliente.Inicio.getAlumno()
+				.getMatricula().getMatriculadas();
+		for (int i = 0; i < matr.size(); i++) {
+			modelo.addElement(matr.get(i).getNombre());
+		}
+		return modelo;
+	}
+
 	private void definirElementos() {
 		pasarIzdaBtn.setText("<");
 		pasarIzdaBtn.setActionCommand("pulsadoIzda");
@@ -89,10 +163,10 @@ public class MatricularMarco extends JFrame implements ActionListener {
 		disponiblesList.setModel(cargarListaDisponibles());
 		matriculadasList.setModel(cargarListaMatriculadas());
 	}
-	
+
 	private void definirMenu() {
-		menuArchivo.setText( this.ITEM_ARCHIVO);
-		menuItemSalir.setText( this.ITEM_SALIR);
+		menuArchivo.setText(this.ITEM_ARCHIVO);
+		menuItemSalir.setText(this.ITEM_SALIR);
 		menuItemSalir.addActionListener(this);
 		menuArchivo.add(menuItemSalir);
 
@@ -106,97 +180,6 @@ public class MatricularMarco extends JFrame implements ActionListener {
 
 		this.setJMenuBar(menuPrincipal);
 	}
-	
-	private DefaultListModel cargarListaDisponibles() {
-		DefaultListModel modelo = new DefaultListModel();
-		int curso = tap.practica.Inicio.getAlumno().getCurso()-1;
-		System.out.println("\t\tEstudiando" + curso+1);
-//		ArrayList<Asignatura> matriculadas = tap.practica.Inicio.getAlumno().getMatricula().getMatriculadas();
-		ArrayList<Asignatura> sem1 = tap.practica.Inicio.getAlumno().
-							getEstudioCarrera().getCursos().get(curso).getSemestre1();
-		ArrayList<Asignatura> sem2 = tap.practica.Inicio.getAlumno().
-							getEstudioCarrera().getCursos().get(curso).getSemestre2();
-//		for (int i = 0; i < sem1.size(); i++) {
-//			for (int j = 0 ; j < matriculadas.size(); j++) {
-//				if (sem1.get(i).getCodigo().equals(matriculadas.get(j).getCodigo()));
-//				else { modelo.addElement(sem1.get(i).getNombre()); break; }
-//			}
-//			modelo.addElement(sem1.get(i).getNombre());
-//		}
-//		for (int i = 0; i < sem2.size(); i++) {
-//			for (int j = 0 ; j < matriculadas.size(); j++) {
-//				if (sem2.get(i).getCodigo().equals(matriculadas.get(j).getCodigo())) continue;
-//				else { modelo.addElement(sem2.get(i).getNombre()); continue; }
-//			}
-//			modelo.addElement(sem2.get(i).getNombre());
-//		}
-		for (int i = 0; i < sem1.size(); i++) {
-			modelo.addElement(sem1.get(i).getNombre());
-		}
-		for (int i = 0; i < sem2.size(); i++) {
-			modelo.addElement(sem2.get(i).getNombre());
-		}
-		return modelo;
-	}
-	
-	private DefaultListModel cargarListaMatriculadas() {
-		DefaultListModel modelo = new DefaultListModel();
-		ArrayList<Asignatura> matr = tap.practica.Inicio.getAlumno().getMatricula().getMatriculadas();
-		for (int i = 0; i < matr.size(); i++) {
-			modelo.addElement(matr.get(i).getNombre());
-		}
-		return modelo;
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if ( e.getActionCommand().compareTo( ITEM_ACERCADE ) == 0 )
-			System.out.println( "Acerca de");
-
-		if ( e.getActionCommand().compareTo( ITEM_SALIR ) == 0 ) {
-			System.out.println( "Salimos");
-			System.exit(0);
-			return;
-		}
-		
-		if ("pulsadoIzda".equals(e.getActionCommand())) {
-			int index = matriculadasList.getSelectedIndex();
-			if (index != -1) {
-				System.out.println("Añadiendo a disponibles, quitando de matriculadas");
-				DefaultListModel listaDrcha = (DefaultListModel) matriculadasList.getModel();
-				String seleccion = (String) listaDrcha.getElementAt(index);
-				DefaultListModel listaIzda = (DefaultListModel) disponiblesList.getModel();
-				tap.practica.Inicio.getAlumno().getMatricula().desmatricular(seleccion);
-				listaIzda.addElement(seleccion);
-				listaDrcha.removeElementAt( index );
-			}
-		}
-		
-		if ("pulsadoDrcha".equals(e.getActionCommand())) {
-			int index = disponiblesList.getSelectedIndex();
-			if (index != -1) {
-				System.out.println("Añadiendo a matriculadas, quitando de disponibles");
-				  DefaultListModel listaIzda = (DefaultListModel) disponiblesList.getModel();  
-				  String seleccion = (String) listaIzda.getElementAt(index);
-				  DefaultListModel listaDrcha = (DefaultListModel) matriculadasList.getModel();
-				  if (tap.practica.Inicio.getAlumno().getMatricula().matricular(seleccion)) {
-					  listaDrcha.addElement(seleccion);
-					  listaIzda.removeElementAt( index );
-				  }
-				  else {
-					System.out.println("Te pasaste de 60 créditos");
-				}
-			}
-		}
-		
-		if (SAVE.equals(e.getActionCommand())) {
-			if (tap.practica.Inicio.getAlumno().getMatricula().comprobar()) {
-				tap.practica.Inicio.getAlumno().getMatricula().guardar(
-					tap.practica.Inicio.getAlumno().getNif());
-			}
-			else System.out.println("Matrícula no válida");
-		}
-	}
 
 	/**
 	 * @return the disponiblesList
@@ -206,23 +189,39 @@ public class MatricularMarco extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param disponiblesList the disponiblesList to set
-	 */
-	public void setDisponiblesList(JList disponiblesList) {
-		this.disponiblesList = disponiblesList;
-	}
-
-	/**
 	 * @return the matriculadasList
 	 */
 	public JList getMatriculadasList() {
 		return matriculadasList;
 	}
 
+	private void jbInit() throws Exception {
+		showDialog();
+		panelPrincipal = (JPanel) this.getContentPane();
+		panelPrincipal.setLayout(new BorderLayout());
+		this.setTitle(TITLE + " - "
+				+ tap.practica.cliente.Inicio.getAlumno().getNif());
+		definirMenu();
+		definirElementos();
+	}
+
 	/**
-	 * @param matriculadasList the matriculadasList to set
+	 * @param disponiblesList
+	 *            the disponiblesList to set
+	 */
+	public void setDisponiblesList(JList disponiblesList) {
+		this.disponiblesList = disponiblesList;
+	}
+
+	/**
+	 * @param matriculadasList
+	 *            the matriculadasList to set
 	 */
 	public void setMatriculadasList(JList matriculadasList) {
 		this.matriculadasList = matriculadasList;
+	}
+
+	private void showDialog() {
+		dial.setVisible(true);
 	}
 }
