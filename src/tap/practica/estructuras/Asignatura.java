@@ -1,5 +1,7 @@
 package tap.practica.estructuras;
 
+import java.io.Serializable;
+
 /**
  * Clase Asignatura, contiene atributos como una cadena con el código de la
  * asignatura, otra cadena con el nombre y un entero con los créditos
@@ -7,7 +9,7 @@ package tap.practica.estructuras;
  * @author willyaranda
  * @author aldo
  */
-public class Asignatura {
+public class Asignatura implements Serializable {
 
 	String codigo = new String();
 	String nombre = new String();

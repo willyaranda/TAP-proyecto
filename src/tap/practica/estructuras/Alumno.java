@@ -1,5 +1,7 @@
 package tap.practica.estructuras;
 
+import java.io.Serializable;
+
 /**
  * Clase Alumno, que contiene los datos del alumno (ver constructor), así como
  * el curso actual, la carrera que está estudiando y las asignaturas
@@ -10,7 +12,7 @@ package tap.practica.estructuras;
  * 
  */
 
-public class Alumno {
+public class Alumno implements Serializable {
 
 	String nif = new String();
 	String nombre = new String();

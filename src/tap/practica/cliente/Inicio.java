@@ -22,7 +22,7 @@ public class Inicio {
 
 	public static boolean cargarAlumno(String nif) throws RemoteException {
 		try {
-			alumno = (Alumno) fac.getFactory().getBean(nif);
+			alumno = fac.getAlumno(nif);
 			System.out.println("Cargando alumno con nif" + nif);
 			return true;
 		} catch (BeansException e) {
@@ -38,7 +38,7 @@ public class Inicio {
 	public static void main(String[] args) {
 		String url = "rmi://localhost/";
 		try {
-			fac = (FactoryIfaz) Naming.lookup(url + "obj");
+			fac = (FactoryIfaz) Naming.lookup(url + "alumnos");
 			MatricularMarco frame = new MatricularMarco();
 			javax.swing.JFrame.setDefaultLookAndFeelDecorated(true);
 			frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

@@ -3,6 +3,7 @@ package tap.practica.estructuras;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * @author willyaranda
  * @author aldo
  */
-public class Matricula implements GuardarIfaz {
+public class Matricula implements GuardarIfaz, Serializable {
 
 	ArrayList<Asignatura> matriculadas = new ArrayList<Asignatura>();
 	int numCreditos;

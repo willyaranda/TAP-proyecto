@@ -3,8 +3,8 @@ package tap.practica.servidor;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import org.springframework.beans.factory.xml.XmlBeanFactory;
+import tap.practica.estructuras.Alumno;
 
 public interface FactoryIfaz extends Remote {
-	public XmlBeanFactory getFactory() throws RemoteException;
+	public Alumno getAlumno(String nif) throws RemoteException;
 }

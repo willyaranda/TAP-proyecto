@@ -8,25 +8,29 @@ import java.rmi.server.UnicastRemoteObject;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
+import tap.practica.estructuras.Alumno;
+
 public class Factory extends UnicastRemoteObject implements FactoryIfaz {
-	public static XmlBeanFactory factory;
+	public static XmlBeanFactory factory = new XmlBeanFactory(
+			new ClassPathResource("objetos.xml"));
+	public static Alumno a;
 
 	public static void main(String[] args) throws RemoteException,
 			MalformedURLException {
 		System.out.println("Servidor: creando factoría...");
 		Factory fac = new Factory();
 		System.out.println("Servidor: registrando factoría");
-		Naming.rebind("obj", fac);
-		System.out.println("Servidor: factoría registrada como obj");
+		Naming.rebind("alumnos", fac);
+		System.out.println("Servidor: factoría registrada como alumnos");
 	}
 
 	protected Factory() throws RemoteException {
-		factory = new XmlBeanFactory(new ClassPathResource(
-				"objetos.xml"));
+		a = (Alumno) factory.getBean("q1234");
 	}
 
 	@Override
-	public XmlBeanFactory getFactory() throws RemoteException {
-		return factory;
+	public Alumno getAlumno(String nif) throws RemoteException {
+		return a;
 	}
+
 }

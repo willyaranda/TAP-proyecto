@@ -1,5 +1,6 @@
 package tap.practica.estructuras;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * @author aldo
  * 
  */
-public class Estudio {
+public class Estudio implements Serializable {
 
 	String nombre = new String();
 	ArrayList<Curso> cursos = new ArrayList<Curso>();
