@@ -25,11 +25,13 @@ public class Factory extends UnicastRemoteObject implements FactoryIfaz {
 	}
 
 	protected Factory() throws RemoteException {
+		//Por ahora existe, debería haber uno dummy
 		a = (Alumno) factory.getBean("q1234");
 	}
 
 	@Override
 	public Alumno getAlumno(String nif) throws RemoteException {
+		a = (Alumno) factory.getBean(nif);
 		return a;
 	}
 
