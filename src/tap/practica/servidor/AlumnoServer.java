@@ -10,7 +10,8 @@ import org.springframework.core.io.ClassPathResource;
 
 import tap.practica.estructuras.Alumno;
 
-public class Factory extends UnicastRemoteObject implements FactoryIfaz {
+public class AlumnoServer extends UnicastRemoteObject implements
+		AlumnoServerIfaz {
 	public static XmlBeanFactory factory = new XmlBeanFactory(
 			new ClassPathResource("objetos.xml"));
 	public static Alumno a;
@@ -18,14 +19,14 @@ public class Factory extends UnicastRemoteObject implements FactoryIfaz {
 	public static void main(String[] args) throws RemoteException,
 			MalformedURLException {
 		System.out.println("Servidor: creando factoría...");
-		Factory fac = new Factory();
+		AlumnoServer fac = new AlumnoServer();
 		System.out.println("Servidor: registrando factoría");
 		Naming.rebind("alumnos", fac);
 		System.out.println("Servidor: factoría registrada como alumnos");
 	}
 
-	protected Factory() throws RemoteException {
-		//Por ahora existe, debería haber uno dummy
+	protected AlumnoServer() throws RemoteException {
+		// Por ahora existe, debería haber uno dummy
 		a = (Alumno) factory.getBean("q1234");
 	}
 

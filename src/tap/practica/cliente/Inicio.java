@@ -11,15 +11,14 @@ import org.springframework.beans.BeansException;
 
 import tap.practica.estructuras.Alumno;
 import tap.practica.interfaz.MatricularMarco;
-import tap.practica.servidor.FactoryIfaz;
+import tap.practica.servidor.AlumnoServerIfaz;
 
 public class Inicio {
 
 	public static Alumno alumno;
-	public static FactoryIfaz fac;
+	public static AlumnoServerIfaz fac;
 
 	// La factoría de donde sacamos los alumnos y demás
-
 	public static boolean cargarAlumno(String nif) throws RemoteException {
 		try {
 			alumno = fac.getAlumno(nif);
@@ -38,7 +37,7 @@ public class Inicio {
 	public static void main(String[] args) {
 		String url = "rmi://localhost/";
 		try {
-			fac = (FactoryIfaz) Naming.lookup(url + "alumnos");
+			fac = (AlumnoServerIfaz) Naming.lookup(url + "alumnos");
 			MatricularMarco frame = new MatricularMarco();
 			javax.swing.JFrame.setDefaultLookAndFeelDecorated(true);
 			frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

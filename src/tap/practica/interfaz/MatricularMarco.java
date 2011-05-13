@@ -79,7 +79,7 @@ public class MatricularMarco extends JFrame implements ActionListener {
 				String seleccion = (String) listaDrcha.getElementAt(index);
 				DefaultListModel listaIzda = (DefaultListModel) disponiblesList
 						.getModel();
-				tap.practica.cliente.Inicio.getAlumno().getMatricula()
+				tap.practica.cliente.Inicio.getAlumno()
 						.desmatricular(seleccion);
 				listaIzda.addElement(seleccion);
 				listaDrcha.removeElementAt(index);
@@ -96,8 +96,8 @@ public class MatricularMarco extends JFrame implements ActionListener {
 				String seleccion = (String) listaIzda.getElementAt(index);
 				DefaultListModel listaDrcha = (DefaultListModel) matriculadasList
 						.getModel();
-				if (tap.practica.cliente.Inicio.getAlumno().getMatricula()
-						.matricular(seleccion)) {
+				if (tap.practica.cliente.Inicio.getAlumno().matricular(
+						seleccion)) {
 					listaDrcha.addElement(seleccion);
 					listaIzda.removeElementAt(index);
 				} else {
@@ -107,9 +107,8 @@ public class MatricularMarco extends JFrame implements ActionListener {
 		}
 
 		if (SAVE.equals(e.getActionCommand())) {
-			if (tap.practica.cliente.Inicio.getAlumno().getMatricula()
-					.comprobar()) {
-				tap.practica.cliente.Inicio.getAlumno().getMatricula().guardar(
+			if (tap.practica.cliente.Inicio.getAlumno().comprobar()) {
+				tap.practica.cliente.Inicio.getAlumno().guardar(
 						tap.practica.cliente.Inicio.getAlumno().getNif());
 			} else
 				System.out.println("Matrícula no válida");
@@ -120,8 +119,6 @@ public class MatricularMarco extends JFrame implements ActionListener {
 		DefaultListModel modelo = new DefaultListModel();
 		int curso = tap.practica.cliente.Inicio.getAlumno().getCurso() - 1;
 		System.out.println("\t\tEstudiando" + curso + 1);
-		// ArrayList<Asignatura> matriculadas =
-		// tap.practica.Inicio.getAlumno().getMatricula().getMatriculadas();
 		ArrayList<Asignatura> sem1 = tap.practica.cliente.Inicio.getAlumno()
 				.getEstudioCarrera().getCursos().get(curso).getSemestre1();
 		ArrayList<Asignatura> sem2 = tap.practica.cliente.Inicio.getAlumno()
@@ -138,7 +135,7 @@ public class MatricularMarco extends JFrame implements ActionListener {
 	private DefaultListModel cargarListaMatriculadas() {
 		DefaultListModel modelo = new DefaultListModel();
 		ArrayList<Asignatura> matr = tap.practica.cliente.Inicio.getAlumno()
-				.getMatricula().getMatriculadas();
+				.getMatriculadas();
 		for (int i = 0; i < matr.size(); i++) {
 			modelo.addElement(matr.get(i).getNombre());
 		}

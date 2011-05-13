@@ -5,6 +5,6 @@ import java.rmi.RemoteException;
 
 import tap.practica.estructuras.Alumno;
 
-public interface FactoryIfaz extends Remote {
+public interface AlumnoServerIfaz extends Remote {
 	public Alumno getAlumno(String nif) throws RemoteException;
 }

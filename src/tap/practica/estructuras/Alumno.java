@@ -1,6 +1,10 @@
 package tap.practica.estructuras;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Clase Alumno, que contiene los datos del alumno (ver constructor), así como
@@ -17,6 +21,8 @@ public class Alumno implements Serializable {
 	String nif = new String();
 	String nombre = new String();
 	String apellidos = new String();
+	ArrayList<Asignatura> matriculadas = new ArrayList<Asignatura>();
+	int numCreditos;
 
 	/**
 	 * Curso que está cursando actualmente
@@ -27,12 +33,6 @@ public class Alumno implements Serializable {
 	 * Carrera actual (tipo Estudio)
 	 */
 	Estudio estudioCarrera = new Estudio();
-
-	/**
-	 * Atributo de tipo Matrícula que contiene todas las asignaturas de las que
-	 * está matriculado el Alumno
-	 */
-	Matricula matricula = new Matricula();
 
 	public Alumno() {
 	}
@@ -54,6 +54,17 @@ public class Alumno implements Serializable {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.curso = curso;
+	}
+
+	public Boolean comprobar() {
+		return ((numCreditos > 60) || (numCreditos < 12)) ? false : true;
+	}
+
+	public void desmatricular(String nombre) {
+		Asignatura a = tap.practica.cliente.Inicio.getAlumno()
+				.getEstudioCarrera().buscarAsig(nombre);
+		numCreditos -= a.getCreditos();
+		matriculadas.remove(a);
 	}
 
 	/**
@@ -82,8 +93,12 @@ public class Alumno implements Serializable {
 	/**
 	 * @return the matricula
 	 */
-	public Matricula getMatricula() {
-		return matricula;
+	public ArrayList<Asignatura> getMatricula() {
+		return matriculadas;
+	}
+
+	public ArrayList<Asignatura> getMatriculadas() {
+		return matriculadas;
 	}
 
 	/**
@@ -98,6 +113,56 @@ public class Alumno implements Serializable {
 	 */
 	public String getNombre() {
 		return nombre;
+	}
+
+	public void guardar(String nif) {
+		System.out.println("Guardando...");
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream("./" + nif + ".txt");
+			Alumno a = tap.practica.cliente.Inicio.getAlumno();
+			String write = a.getNif() + " - " + a.getNombre() + " "
+					+ a.getApellidos() + ". Estudiando: "
+					+ a.getEstudioCarrera().getNombre() + " en " + a.getCurso()
+					+ "º. Asignaturas: \n";
+			for (Asignatura as : matriculadas) {
+				write += (as.getCodigo() + ": " + as.getNombre() + ", "
+						+ as.getCreditos() + "\n");
+			}
+			fos.write(write.getBytes());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Añade una Asignatura a la lista de matriculadas.<br />
+	 * Comprueba si se puede añadir a la lista de matriculación. No nos podemos
+	 * pasar de 60 créditos matriculados, y en ese caso devuelve <b>false</b> En
+	 * cualquier otro caso, devuelve <b>true</b>
+	 * 
+	 * @param nombre
+	 *            el nombre de la asignatura
+	 * @return si la operación ha sido completada correctamente
+	 */
+	public Boolean matricular(String nombre) {
+		Asignatura a = tap.practica.cliente.Inicio.getAlumno()
+				.getEstudioCarrera().buscarAsig(nombre);
+		if ((numCreditos + a.getCreditos()) > 60)
+			return false;
+		numCreditos += a.getCreditos();
+		matriculadas.add(a);
+		return true;
 	}
 
 	/**
@@ -134,14 +199,6 @@ public class Alumno implements Serializable {
 	 */
 	public void setEstudioCarrera(Estudio estudioCarrera) {
 		this.estudioCarrera = estudioCarrera;
-	}
-
-	/**
-	 * @param matricula
-	 *            the matricula to set
-	 */
-	public void setMatricula(Matricula matricula) {
-		this.matricula = matricula;
 	}
 
 	/**
