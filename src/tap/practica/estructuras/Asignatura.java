@@ -24,11 +24,14 @@ public class Asignatura implements Serializable {
 	 *            cadena con el nombre
 	 * @param creditos
 	 *            entero con el número de créditos
+	 * @throws Exception
+	 *             si el número de créditos no es válido
 	 */
-	public Asignatura(String codigo, String nombre, int creditos) {
+	public Asignatura(String codigo, String nombre, int creditos)
+			throws Exception {
 		this.codigo = codigo;
 		this.nombre = nombre;
-		this.creditos = creditos;
+		setCreditos(creditos);
 	}
 
 	/**
@@ -84,13 +87,15 @@ public class Asignatura implements Serializable {
 	 * 
 	 * @param creditos
 	 *            un entero con el número de créditos
+	 * @throws Exception
+	 *             número de créditos inválido
 	 */
-	public void setCreditos(int creditos) {
+	public void setCreditos(int creditos) throws Exception {
 		// Si ponemos créditos mayor que 9 o menor que 3, excepción
 		try {
 			if ((creditos > 9) || (creditos < 3))
-				throw new Exception("El número"
-						+ " de créditos introducido no es válido.");
+				throw new Exception("Son " + creditos
+						+ " créditos, el máximo es 9 y el mínimo 3");
 			this.creditos = creditos;
 		} catch (Exception e) {
 			System.out.println(e.toString());
